@@ -11,14 +11,18 @@ No words have been added. Language authority: Cheyne Halloran.
 
 - `words.json`: 1,453 entries. Each one is marked:
   - `ok`: same headword and matching meaning in both sources (842). Lessons, quizzes and word of the day use only these.
-  - `chk`: same headword but the meanings do not line up (44). Needs checking.
-  - `b`: Baird 2022 dictionary only (441).
+  - `chk`: same headword but the meanings do not line up (42). Needs checking.
+  - `b`: Baird 2022 dictionary only (443).
   - `s`: sketch grammar word list only (126).
 - 15 personal names from the dictionary are left out.
 - Lessons also leave out ceremony, death, rude and racial terms, and anything marked uncertain with `?`. Those stay in the dictionary.
 - Word groups (Animals, Body and so on) come from the English meanings only. They are for browsing, not a language claim.
 - The verb page uses the ngubu 'to beat, to hit' paradigm from the sketch grammar, Appendix B, pages 87 to 90.
 - No audio. There are no recordings in the source files.
+
+## Notes from the language authority
+
+`authority_notes.json` holds notes from Cheyne Halloran, recorded word for word. The build attaches each note to every entry with that headword. If a note confirms a sketch grammar meaning (`confirms`), that meaning is no longer flagged as a conflict.
 
 ## Run it
 

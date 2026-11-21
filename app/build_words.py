@@ -78,6 +78,13 @@ PERSON = re.compile(r'\b(male name|female name|also known as|man\'s name|woman\'
 sk_by = collections.defaultdict(list)
 for r in S: sk_by[norm(r['hw'])].append(r)
 used, entries, held_back = set(), [], 0
+# Notes from the language authority (Cheyne Halloran). Recorded word for word in authority_notes.json.
+NOTES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'authority_notes.json')
+NOTES = json.load(open(NOTES_PATH, encoding='utf-8')) if os.path.exists(NOTES_PATH) else []
+note_by = {norm(n['w']): n for n in NOTES}
+for n in NOTES:  # sketch meanings the authority has confirmed are not treated as conflicts
+    for r in sk_by.get(norm(n['w']), []):
+        if r['gl'] in n.get('confirms', []): used.add(id(r))
 NAMEPAIR = re.compile(r'^[A-Z][a-z]+ [A-Z][a-z]+$')
 keep = [x for x in X if x['hw'] and x['g']]
 for x in keep:
@@ -93,6 +100,8 @@ for x in keep:
     entries.append(dict(w=x['hw'], g=x['g'], pos=', '.join(x['pos']), dl=', '.join(x['dl']),
                         sg=' / '.join(r['gl'] for r in show), sp=', '.join(sorted({str(r['p']) for r in show})),
                         st=st, com=' '.join(x['com'])))
+    n = note_by.get(norm(x['hw']))
+    if n: entries[-1].update(cn=n['note'], cnby=n['by'], cnd=n['date'], cnc='; '.join(n.get('confirms', [])))
 baird_norms = {norm(x['hw']) for x in X}
 for r in S:
     if id(r) in used or norm(r['hw']) in baird_norms: continue

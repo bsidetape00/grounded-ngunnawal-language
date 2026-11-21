@@ -248,6 +248,7 @@ function openWord(w){
   bg.innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(e.w)}"><div class="grab"></div>
    <div class="row"><div class="grow"><div class="word" style="font-size:30px">${esc(plain(e.w))}</div><div class="gloss" style="font-size:16px">${esc(short(e))}</div></div>${favBtn(e)}<button class="iconbtn" data-close aria-label="Close">${I.close}</button></div>
    <div style="margin-top:10px">${pill(e)}</div><p class="small" style="margin:8px 0 0">${why}</p>
+   ${e.cn?`<div class="src"><h3>Note from ${esc(e.cnby)}</h3><div>&ldquo;${esc(e.cn)}&rdquo;</div><div class="small" style="margin-top:4px">${e.cnc?`Confirms the sketch grammar meaning: ${esc(e.cnc)}. `:''}Recorded ${esc(e.cnd)}</div></div>`:''}
    ${e.g?`<div class="src"><h3>Baird dictionary 2022</h3><div>${esc(e.g.replace(/ \| /g,' · '))}</div>
      <dl class="kv" style="margin-top:8px">${e.pos?`<dt>Word type</dt><dd>${esc(e.pos)}</dd>`:''}${e.dl?`<dt>Recorded at</dt><dd>${esc(e.dl)}</dd>`:''}${/\s\d+$/.test(e.w)?`<dt>Entry</dt><dd>${esc(e.w)} (same spelling, separate entry)</dd>`:''}</dl>
      ${e.com?`<p class="small" style="margin:8px 0 0">Note in source: ${esc(e.com)}</p>`:''}</div>`:''}
