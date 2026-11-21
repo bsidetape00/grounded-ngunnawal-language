@@ -10,10 +10,13 @@ No words have been added. Language authority: Cheyne Halloran.
 ## What is in it
 
 - `words.json`: 1,453 entries. Each one is marked:
-  - `ok`: same headword and matching meaning in both sources (842). Lessons, quizzes and word of the day use only these.
-  - `chk`: same headword but the meanings do not line up (42). Needs checking.
+  - `cv`: meaning checked by Cheyne Halloran (35). His meaning is shown first.
+  - `ok`: same headword and matching meaning in both sources (840).
+  - `chk`: same headword but the meanings do not line up, or Cheyne has a question or is unsure (8).
   - `b`: Baird 2022 dictionary only (443).
   - `s`: sketch grammar word list only (126).
+  - `x`: Cheyne says it is not a Ngunnawal word (1, waabi). Never used in lessons.
+- Lessons, quizzes and word of the day use only `cv` and `ok` words.
 - 15 personal names from the dictionary are left out.
 - Lessons also leave out ceremony, death, rude and racial terms, and anything marked uncertain with `?`. Those stay in the dictionary.
 - Word groups (Animals, Body and so on) come from the English meanings only. They are for browsing, not a language claim.
@@ -22,7 +25,7 @@ No words have been added. Language authority: Cheyne Halloran.
 
 ## Notes from the language authority
 
-`authority_notes.json` holds notes from Cheyne Halloran, recorded word for word. The build attaches each note to every entry with that headword. If a note confirms a sketch grammar meaning (`confirms`), that meaning is no longer flagged as a conflict.
+`authority_notes.json` holds notes from Cheyne Halloran. `note` is his exact words. `meaning` is the same meaning with punctuation and capitals tidied for display. `type` is one of confirmed, corrected, question, unsure or not_ngunnawal. `assumed` records any case where the note was matched to an entry by judgement (for example he wrote gumun and it was matched to guman). Confirmed and corrected notes set the entry to `cv`.
 
 ## Run it
 

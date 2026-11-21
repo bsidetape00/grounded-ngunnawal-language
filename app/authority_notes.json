@@ -1,9 +1,337 @@
 [
-  {
-    "w": "mara",
-    "note": "mara can be pathway, or way of. its how the hand is used when saying it",
-    "confirms": ["path; pathway"],
-    "by": "Cheyne Halloran",
-    "date": "2026-11-21"
-  }
+ {
+  "w": "mara 1",
+  "note": "mara can be pathway, or way of. its how the hand is used when saying it\nmara.  Hand or a pathway indicated by the hand in explanaition",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Hand or a pathway indicated by the hand in explanation",
+  "wrote": "mara"
+ },
+ {
+  "w": "bangimugi",
+  "note": "bangimugi\tdon’t\tcease!.  means stop or stop doing that?",
+  "type": "question",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21"
+ },
+ {
+  "w": "bar-bara mariny",
+  "note": "Bar-Bara means white?\nMarrin or marriny means Man",
+  "type": "question",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21"
+ },
+ {
+  "w": "mariny",
+  "note": "Marrin or marriny means Man",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Man",
+  "wrote": "Marrin or marriny"
+ },
+ {
+  "w": "barabi 2",
+  "note": "Barabi means to bleed?",
+  "type": "question",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "wrote": "Barabi"
+ },
+ {
+  "w": "baramaldayan",
+  "note": "baramaldayan\t I don't know.  Maybe white law man or white (bara) something that would identify negatively or like a mission boss or manager",
+  "type": "unsure",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21"
+ },
+ {
+  "w": "baray",
+  "note": "Fast moving like a wallaby",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Fast moving like a wallaby",
+  "assumed": "Matched to baray from its place in the list"
+ },
+ {
+  "w": "budhung",
+  "note": "Budhung Aboriginal Person",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Aboriginal Person"
+ },
+ {
+  "w": "dharalangu",
+  "note": "dharalangu their, his or hers maybe non binary",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "their, his or hers"
+ },
+ {
+  "w": "diya",
+  "note": "diya sunset, or the beginning of night",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "sunset, or the beginning of night"
+ },
+ {
+  "w": "djama",
+  "note": "Djama.  more than enough. plenty",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "more than enough, plenty"
+ },
+ {
+  "w": "dundu",
+  "note": "dundu swan",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "swan"
+ },
+ {
+  "w": "gulangga",
+  "note": "gulangguya. I as in I did this, or I saw this",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "I, as in I did this, or I saw this",
+  "wrote": "gulangguya",
+  "assumed": "Cheyne wrote gulangguya. Matched to gulangga because that is the entry for I. gulangguya is my."
+ },
+ {
+  "w": "guman",
+  "note": "gumun.  soon, before long, after a short time, or eventually",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "soon, before long, after a short time, or eventually",
+  "wrote": "gumun",
+  "assumed": "Cheyne wrote gumun. Matched to guman (by and by) from its place in the list."
+ },
+ {
+  "w": "djindjinggang",
+  "note": "Pleiades.  Star cluster, seven sisters being pursued across the sky",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Pleiades, star cluster, seven sisters",
+  "wrote": "Pleiades",
+  "assumed": "Matched to djindjinggang from its place in the list"
+ },
+ {
+  "w": "gulangguya",
+  "note": "gulangguya. My, ,marking ownership or responsible for",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "My, marking ownership or responsible for"
+ },
+ {
+  "w": "gurumbul",
+  "note": "gurumbul, Valiant or brave",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Valiant or brave"
+ },
+ {
+  "w": "guwung",
+  "note": "guwung. Elder Brother",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Elder brother"
+ },
+ {
+  "w": "mar",
+  "note": "Mar. as a result of.",
+  "type": "corrected",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "as a result of"
+ },
+ {
+  "w": "mulanggari",
+  "note": "mulanggari, Alive.  Not dead.",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Alive, not dead"
+ },
+ {
+  "w": "ngadj",
+  "note": "ngadj. To Fry, or fried.",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "To fry, or fried"
+ },
+ {
+  "w": "nganaga",
+  "note": "nganaga. who, Of whom",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "who, of whom"
+ },
+ {
+  "w": "ngunu",
+  "note": "ngunu.  This, Here. or this place as in Nguna",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "This, here, this place"
+ },
+ {
+  "w": "nidju",
+  "note": "nidju. Those 2 or them.",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Those two, or them"
+ },
+ {
+  "w": "nyindidji",
+  "note": "nyindidji . you, as in you did this, you want this, you saw this.",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "you, as in you did this, you want this, you saw this"
+ },
+ {
+  "w": "waabi",
+  "note": "waabi is not a ngunnawal word.   I believe it is old english as in Warby, Dishevveled or of poor quality",
+  "type": "not_ngunnawal",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21"
+ },
+ {
+  "w": "wangang",
+  "note": "wangang, no, or incorrect.",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "no, or incorrect"
+ },
+ {
+  "w": "warana",
+  "note": "Warana.  is a distal demonstrative meaning \"that\" (or \"that one)",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "that, or that one"
+ },
+ {
+  "w": "wiyag",
+  "note": "wiyag.  Bones and Cartilage",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Bones and cartilage"
+ },
+ {
+  "w": "yaambul",
+  "note": "yaambul. Not true or the story is a lie.",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Not true, or the story is a lie"
+ },
+ {
+  "w": "maliyan",
+  "note": "maliyan. Wedge tail Eagle",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Wedge-tailed eagle"
+ },
+ {
+  "w": "banggu",
+  "note": "banggu. sugar glider",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "sugar glider"
+ },
+ {
+  "w": "mayning",
+  "note": "mayning.  People, or Mankind",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "People, or mankind"
+ },
+ {
+  "w": "muwangba",
+  "note": "muwangba.  Traditional Aboriginal Person.  Not living the colonised way.",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Traditional Aboriginal person, not living the colonised way"
+ },
+ {
+  "w": "galungbagang",
+  "note": "galungbagang.  Larger Coolamon",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Larger coolamon"
+ },
+ {
+  "w": "ngilimiig",
+  "note": "ngilimiig.  Dwelling",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Dwelling"
+ },
+ {
+  "w": "dumbag",
+  "note": "dumbag.  An adaptation of 'Jumbuck'.  interpreted by ngunnawal people as dumbag.",
+  "type": "corrected",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "An adaptation of 'Jumbuck'",
+  "lesson": false
+ },
+ {
+  "w": "biragi",
+  "note": "biragi.  Sprit of, or haunted by.",
+  "type": "confirmed",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Spirit of, or haunted by"
+ },
+ {
+  "w": "bingi",
+  "note": "bingi. stomach or belly",
+  "type": "corrected",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "stomach or belly"
+ },
+ {
+  "w": "garawang",
+  "note": "garawang. Magpie",
+  "type": "corrected",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "meaning": "Magpie"
+ },
+ {
+  "w": "gagag guwi gaga",
+  "note": "gaga. possibly a regional word a Ngunnawal word meaning 'come' or 'come here' used as a warm call or invitation for someone to approach. gaga from yuin and kaka from gundungarra",
+  "type": "unsure",
+  "by": "Cheyne Halloran",
+  "date": "2026-11-21",
+  "wrote": "gaga",
+  "assumed": "Matched to gagag guwi gaga from its place in the list"
+ }
 ]

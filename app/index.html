@@ -55,6 +55,8 @@ header.top h1{font-size:18px;font-weight:700;margin:0;text-wrap:balance}
 .st-ok{background:var(--sage-soft);color:var(--sage)}
 .st-chk{background:var(--warn-soft);color:var(--warn)}
 .st-b,.st-s{background:var(--ochre-soft);color:var(--ochre)}
+.st-cv{background:var(--sage);color:var(--card)}
+.st-x{background:var(--line);color:var(--muted);text-decoration:line-through}
 .heart{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;flex:none;color:var(--ochre)}
 .heart svg{width:22px;height:22px}
 .progress{height:6px;border-radius:6px;background:var(--line);overflow:hidden}
@@ -140,7 +142,7 @@ const I={
  close:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>'
 };
 const TABS=[['home','Home',I.home],['dictionary','Dictionary',I.dict],['learn','Learn',I.learn],['saved','Saved',I.saved],['about','About',I.about]];
-const ST={ok:['Both sources agree','st-ok'],chk:['Sources differ','st-chk'],b:['Baird 2022 only','st-b'],s:['Sketch grammar only','st-s']};
+const ST={cv:['Checked by Cheyne','st-cv'],ok:['Both sources agree','st-ok'],chk:['Sources differ','st-chk'],b:['Baird 2022 only','st-b'],s:['Sketch grammar only','st-s'],x:['Not Ngunnawal','st-x']};
 const CATS=['Animals','Body','Family','Country and sky','Plants','Things people make','Actions','Numbers','People words','Other','Places'];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const store={get(k,d){try{const v=localStorage.getItem('yarn-ngl:'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('yarn-ngl:'+k,JSON.stringify(v))}catch(e){}}};
@@ -158,7 +160,7 @@ async function boot(){
   try{
     const r=await fetch('words.json'); W=await r.json();
   }catch(e){document.getElementById('view').innerHTML='<div class="empty">Could not load words.json. Open this page through the published link or a local web server, not as a file.</div>';return}
-  POOL=W.filter(e=>e.st==='ok' && !/^[-=]/.test(e.w) && !/\s/.test(plain(e.w)) && e.c!=='Places' && !HOLD.test(e.g+' '+e.sg));
+  POOL=W.filter(e=>(e.st==='ok'||e.st==='cv') && !e.nolesson && !/^[-=]/.test(e.w) && !/\s/.test(plain(e.w)) && e.c!=='Places' && !HOLD.test(e.g+' '+e.sg+' '+(e.cm||'')));
   buildLessons();
   document.getElementById('tabs').innerHTML=TABS.map(([id,l,ic])=>`<button data-tab="${id}">${ic}<span>${l}</span></button>`).join('');
   document.getElementById('tabs').onclick=ev=>{const b=ev.target.closest('button');if(b)go(b.dataset.tab)};
@@ -212,7 +214,7 @@ function Dict(){
   view(`<div class="stack">
     <label class="search">${I.search}<input id="q" type="search" placeholder="Search Ngunnawal or English" autocomplete="off" value="${esc(dq.q)}" aria-label="Search words"></label>
     <div class="chips" id="cats">${cats.map(c=>`<button class="chip" data-cat="${esc(c)}" aria-pressed="${dq.cat===c}">${esc(c)}</button>`).join('')}</div>
-    <div class="chips" id="sts">${[['all','All sources'],['ok','Both agree'],['chk','Sources differ'],['b','Baird 2022 only'],['s','Sketch only']].map(([k,l])=>`<button class="chip" data-st="${k}" aria-pressed="${dq.st===k}">${l}</button>`).join('')}</div>
+    <div class="chips" id="sts">${[['all','All sources'],['cv','Checked by Cheyne'],['ok','Both agree'],['chk','Sources differ'],['b','Baird 2022 only'],['s','Sketch only'],['x','Not Ngunnawal']].map(([k,l])=>`<button class="chip" data-st="${k}" aria-pressed="${dq.st===k}">${l}</button>`).join('')}</div>
     <div class="count" id="cnt"></div>
     <div class="list" id="res"></div>
   </div>`);
@@ -228,7 +230,7 @@ function renderDict(){
   let r=W.filter(e=>(dq.cat==='All'||e.c===dq.cat)&&(dq.st==='all'||e.st===dq.st));
   if(q){
     const scored=[];
-    for(const e of r){const w=fold(e.w),g=fold(e.g+' '+e.sg);let s=-1;
+    for(const e of r){const w=fold(e.w),g=fold(e.g+' '+e.sg+' '+(e.cm||''));let s=-1;
       if(w===q||plain(w)===q)s=0;else if(fold(short(e))===q)s=0.5;else if(w.startsWith(q))s=1;else if(new RegExp('\\b'+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).test(g))s=2;else if(w.includes(q))s=3;else if(g.includes(q))s=4;
       if(s>=0)scored.push([s,e])}
     r=scored.sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
@@ -243,12 +245,12 @@ function rowHTML(e){return `<button class="item" data-open="${esc(e.w)}"><span c
 /* ---------- Detail sheet ---------- */
 function openWord(w){
   const e=W.find(x=>x.w===w); if(!e) return;
-  const why={ok:'The headword is in both lists and the meanings match.',chk:'The headword is in both lists but the meanings do not line up. Check with Cheyne before using.',b:'Only in the Baird 2022 dictionary. Not in the sketch grammar word list.',s:'Only in the 2019 sketch grammar word list. Not in the Baird 2022 dictionary.'}[e.st];
+  const why={cv:'Meaning checked by Cheyne Halloran, language authority. His meaning is shown first.',x:'Cheyne Halloran says this is not a Ngunnawal word. Kept here only so the record is complete.',ok:'The headword is in both lists and the meanings match.',chk:'The headword is in both lists but the meanings do not line up. Check with Cheyne before using.',b:'Only in the Baird 2022 dictionary. Not in the sketch grammar word list.',s:'Only in the 2019 sketch grammar word list. Not in the Baird 2022 dictionary.'}[e.st];
   const bg=document.createElement('div'); bg.className='sheet-bg';
   bg.innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(e.w)}"><div class="grab"></div>
    <div class="row"><div class="grow"><div class="word" style="font-size:30px">${esc(plain(e.w))}</div><div class="gloss" style="font-size:16px">${esc(short(e))}</div></div>${favBtn(e)}<button class="iconbtn" data-close aria-label="Close">${I.close}</button></div>
    <div style="margin-top:10px">${pill(e)}</div><p class="small" style="margin:8px 0 0">${why}</p>
-   ${e.cn?`<div class="src"><h3>Note from ${esc(e.cnby)}</h3><div>&ldquo;${esc(e.cn)}&rdquo;</div><div class="small" style="margin-top:4px">${e.cnc?`Confirms the sketch grammar meaning: ${esc(e.cnc)}. `:''}Recorded ${esc(e.cnd)}</div></div>`:''}
+   ${e.cn?`<div class="src"><h3>${{confirmed:'Meaning from',corrected:'Corrected by',question:'Question from',unsure:'Unsure, note from',not_ngunnawal:'Note from'}[e.ct]||'Note from'} ${esc(e.cnby)}</h3>${e.cm?`<div style="font-weight:600">${esc(e.cm)}</div>`:''}<div class="small" style="margin-top:4px;white-space:pre-line">Exact words: &ldquo;${esc(e.cn)}&rdquo;</div>${e.cna?`<div class="small" style="margin-top:4px"><b>Assumption:</b> ${esc(e.cna)}</div>`:''}<div class="small" style="margin-top:4px">Recorded ${esc(e.cnd)}</div></div>`:''}
    ${e.g?`<div class="src"><h3>Baird dictionary 2022</h3><div>${esc(e.g.replace(/ \| /g,' · '))}</div>
      <dl class="kv" style="margin-top:8px">${e.pos?`<dt>Word type</dt><dd>${esc(e.pos)}</dd>`:''}${e.dl?`<dt>Recorded at</dt><dd>${esc(e.dl)}</dd>`:''}${/\s\d+$/.test(e.w)?`<dt>Entry</dt><dd>${esc(e.w)} (same spelling, separate entry)</dd>`:''}</dl>
      ${e.com?`<p class="small" style="margin:8px 0 0">Note in source: ${esc(e.com)}</p>`:''}</div>`:''}
@@ -281,7 +283,7 @@ function Learn(){
     <button class="card" style="text-align:left" data-go="grammar"><div class="row"><span class="badge b-gold">${I.book}</span><div class="grow"><div style="font-weight:700">How verbs change</div><div class="small">ngubu 'to beat, to hit'. Sketch grammar, Appendix B</div></div>${I.chev}</div></button>
     ${groups.map(c=>`<h2 class="sec">${esc(c)}<span class="count">${POOL.filter(e=>e.c===c).length} words</span></h2>
       <div class="list">${LESSONS.filter(l=>l.cat===c).map(l=>`<button class="item" data-go="lesson:${esc(l.id)}"><span class="grow"><span class="w" style="font-size:15px">${esc(l.name)}</span><br><span class="g">${esc(l.words.slice(0,4).map(e=>plain(e.w)).join(', '))}&hellip;</span></span>${done[l.id]?`<span class="pill st-ok">${done[l.id]}/${l.words.length}</span>`:`<span class="count">${l.words.length} words</span>`}</button>`).join('')}</div>`).join('')}
-    <p class="small">Lessons only use words where both sources agree. They leave out ceremony, death and rude words, and anything marked uncertain. Those stay in the dictionary.</p>
+    <p class="small">Lessons only use words Cheyne has checked or where both sources agree. They leave out ceremony, death and rude words, and anything marked uncertain. Those stay in the dictionary.</p>
   </div>`);
 }
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
@@ -393,7 +395,7 @@ function About(){
    </div>
    <h2 class="sec">How each word is marked</h2>
    <div class="list">
-    ${['ok','chk','b','s'].map(k=>`<div class="item"><span class="grow">${pill({st:k})}<br><span class="g" style="white-space:normal">${{ok:'Same spelling and matching meaning in both sources. Lessons use only these.',chk:'Same spelling, but the meanings do not line up. Needs checking.',b:'Only in the 2022 dictionary.',s:'Only in the sketch grammar word list.'}[k]}</span></span><span class="count">${c(k)}</span></div>`).join('')}
+    ${['cv','ok','chk','b','s','x'].map(k=>`<div class="item"><span class="grow">${pill({st:k})}<br><span class="g" style="white-space:normal">${{cv:'Meaning checked by Cheyne Halloran. Lessons use these and the next group.',x:'Cheyne says this is not a Ngunnawal word. Never used in lessons.',ok:'Same spelling and matching meaning in both sources.',chk:'Same spelling, but the meanings do not line up. Needs checking.',b:'Only in the 2022 dictionary.',s:'Only in the sketch grammar word list.'}[k]}</span></span><span class="count">${c(k)}</span></div>`).join('')}
    </div>
    <div class="note"><b>Language authority: Cheyne Halloran.</b> This is a working tool built from source documents. Meanings have not yet been checked with community. Do not share outside Grounded Systems without permission.</div>
    <div class="card prose small">

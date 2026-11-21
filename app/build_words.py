@@ -78,13 +78,16 @@ PERSON = re.compile(r'\b(male name|female name|also known as|man\'s name|woman\'
 sk_by = collections.defaultdict(list)
 for r in S: sk_by[norm(r['hw'])].append(r)
 used, entries, held_back = set(), [], 0
-# Notes from the language authority (Cheyne Halloran). Recorded word for word in authority_notes.json.
+# Notes from the language authority (Cheyne Halloran), kept word for word in authority_notes.json.
+# A note with "w" carrying a number (mara 1) targets that entry only; without one it targets every entry with that spelling.
 NOTES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'authority_notes.json')
 NOTES = json.load(open(NOTES_PATH, encoding='utf-8')) if os.path.exists(NOTES_PATH) else []
-note_by = {norm(n['w']): n for n in NOTES}
-for n in NOTES:  # sketch meanings the authority has confirmed are not treated as conflicts
-    for r in sk_by.get(norm(n['w']), []):
-        if r['gl'] in n.get('confirms', []): used.add(id(r))
+def note_for(hw):
+    for n in NOTES:
+        if n['w'] == hw or (not re.search(r'\s\d+$', n['w']) and norm(n['w']) == norm(hw)): return n
+for n in NOTES:  # a confirmed or corrected meaning settles any sketch conflict for that spelling
+    if n['type'] in ('confirmed', 'corrected', 'not_ngunnawal'):
+        for r in sk_by.get(norm(n['w']), []): used.add(id(r))
 NAMEPAIR = re.compile(r'^[A-Z][a-z]+ [A-Z][a-z]+$')
 keep = [x for x in X if x['hw'] and x['g']]
 for x in keep:
@@ -97,18 +100,25 @@ for x in keep:
     else:
         show = [r for r in x['rows'] if id(r) not in used]  # rows not explained by a sibling homograph
         st = 'chk' if show else 'b'
+        if not show and note_for(x['hw']) and not re.search(r'\s\d+$', x['hw']): show = x['rows']  # keep the sketch meaning visible
     entries.append(dict(w=x['hw'], g=x['g'], pos=', '.join(x['pos']), dl=', '.join(x['dl']),
                         sg=' / '.join(r['gl'] for r in show), sp=', '.join(sorted({str(r['p']) for r in show})),
                         st=st, com=' '.join(x['com'])))
-    n = note_by.get(norm(x['hw']))
-    if n: entries[-1].update(cn=n['note'], cnby=n['by'], cnd=n['date'], cnc='; '.join(n.get('confirms', [])))
+    n = note_for(x['hw'])
+    if n:
+        e = entries[-1]
+        e.update(cn=n['note'], ct=n['type'], cnby=n['by'], cnd=n['date'], cnw=n.get('wrote', ''), cna=n.get('assumed', ''))
+        if n.get('meaning'): e['cm'] = n['meaning']
+        if n.get('lesson') is False: e['nolesson'] = 1
+        if n['type'] in ('confirmed', 'corrected'): e['st'] = 'cv'
+        elif n['type'] == 'not_ngunnawal': e['st'] = 'x'
 baird_norms = {norm(x['hw']) for x in X}
 for r in S:
     if id(r) in used or norm(r['hw']) in baird_norms: continue
     entries.append(dict(w=r['hw'], g='', pos='', dl='', sg=r['gl'], sp=str(r['p']), st='s', com=''))
 
 # ---- grouping by English meaning (for browsing only; not a linguistic claim) ----
-def short(e): return re.split(r'[;:]', (e['g'] or e['sg']).split('|')[0])[0].strip()
+def short(e): return e.get('cm') or re.split(r'[;:]', (e['g'] or e['sg']).split('|')[0])[0].strip()
 CATS = [
  ('People words', None, r'\b(i|me|my|you|youse|your|we|us|our|he|she|him|her|his|they|them|their|those two|1sg|2sg|3sg|1du|2du|3du|1pl|2pl|3pl)\b'),
  ('Numbers', None, r'\b(one|two|three|four|five|six|seven|eight|nine|ten|twenty|number)\b'),
